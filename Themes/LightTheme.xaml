@@ -1,0 +1,55 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#F0F4F8"/>
+    <SolidColorBrush x:Key="CardBrush" Color="White"/>
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#111827"/>
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#6B7280"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#E5E7EB"/>
+    <SolidColorBrush x:Key="HoverBrush" Color="#F8FAFC"/>
+    <SolidColorBrush x:Key="HeaderBrush" Color="#F9FAFB"/>
+    <SolidColorBrush x:Key="AltRowBrush" Color="#FAFAFA"/>
+    <SolidColorBrush x:Key="ActionColumnBrush" Color="#F8FAFC"/>
+
+    <SolidColorBrush x:Key="TableRowBrush" Color="White"/>
+
+    <SolidColorBrush x:Key="SubTextBrush" Color="#6B7280"/>
+
+
+
+    <SolidColorBrush x:Key="InputBrush" Color="#F9FAFB"/>
+    <!-- Texto -->
+    <SolidColorBrush x:Key="TextBrush" Color="#111827"/>
+   
+
+    <!-- Bordes -->
+    <SolidColorBrush x:Key="BorderBrushCustom" Color="#E5E7EB"/>
+
+    <SolidColorBrush x:Key="ActionButtonBackgroundBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="ActionButtonHoverBrush" Color="#F3F4F6"/>
+
+    <SolidColorBrush x:Key="InputTextBrush" Color="#111827"/>
+    <SolidColorBrush x:Key="PlaceholderBrush" Color="#9CA3AF"/>
+
+    <!-- Superficies acentuadas de Reportes: conservan el diseño claro actual. -->
+    <SolidColorBrush x:Key="ReportBlueSurfaceBrush" Color="#EFF6FF"/>
+    <SolidColorBrush x:Key="ReportBlueSoftBrush" Color="#DBEAFE"/>
+    <SolidColorBrush x:Key="ReportBlueAccentBrush" Color="#2563EB"/>
+    <SolidColorBrush x:Key="ReportGreenSurfaceBrush" Color="#ECFDF5"/>
+    <SolidColorBrush x:Key="ReportGreenSoftBrush" Color="#D1FAE5"/>
+    <SolidColorBrush x:Key="ReportGreenAccentBrush" Color="#159447"/>
+    <SolidColorBrush x:Key="ReportRedSurfaceBrush" Color="#FEF2F2"/>
+    <SolidColorBrush x:Key="ReportRedSoftBrush" Color="#FEE2E2"/>
+    <SolidColorBrush x:Key="ReportRedAccentBrush" Color="#DC2626"/>
+    <SolidColorBrush x:Key="ReportAmberSurfaceBrush" Color="#FFFBEB"/>
+    <SolidColorBrush x:Key="ReportAmberSoftBrush" Color="#FEF3C7"/>
+    <SolidColorBrush x:Key="ReportAmberBorderBrush" Color="#FDE68A"/>
+    <SolidColorBrush x:Key="ReportAmberAccentBrush" Color="#D97706"/>
+    <SolidColorBrush x:Key="ReportPurpleSurfaceBrush" Color="#F5F3FF"/>
+    <SolidColorBrush x:Key="ReportPurpleSoftBrush" Color="#EDE9FE"/>
+    <SolidColorBrush x:Key="ReportPurpleBorderBrush" Color="#DDD6FE"/>
+    <SolidColorBrush x:Key="ReportPurpleAccentBrush" Color="#7C3AED"/>
+
+</ResourceDictionary>
