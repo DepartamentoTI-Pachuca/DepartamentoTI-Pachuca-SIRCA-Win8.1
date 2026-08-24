@@ -1,0 +1,24 @@
+﻿<Page x:Class="PoderJudicial.Views.NuevoRegistro"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Background="{DynamicResource BackgroundBrush}">
+
+    <!--
+        Host de "Nuevo Registro". El formulario en sí (todos los controles,
+        validaciones y lógica por tipo de causa) vive en AudienciaFormControl
+        (UserControl). Esta página solo apila instancias de ese control
+        cuando el usuario usa "Concentrada", y coordina la validación y el
+        guardado conjunto de todos los formularios apilados.
+    -->
+    <ScrollViewer x:Name="ScrollPrincipal"
+                  VerticalScrollBarVisibility="Auto"
+                  PreviewMouseWheel="ScrollPrincipal_PreviewMouseWheel">
+        <StackPanel x:Name="PanelFormularios" Margin="0,0,0,24"/>
+    </ScrollViewer>
+
+</Page>

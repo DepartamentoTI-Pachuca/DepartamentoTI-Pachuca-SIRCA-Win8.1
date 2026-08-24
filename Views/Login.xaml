@@ -1,0 +1,238 @@
+﻿<Window x:Class="PoderJudicial.Views.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Login"  
+        Height="466"
+        Width="835"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="131*"/>
+            <ColumnDefinition Width="581*"/>
+            <ColumnDefinition Width="88*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="187*"/>
+            <RowDefinition Height="38*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Fondo -->
+        <Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Resources/supremaCorte.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- Panel derecho-->
+        <Border HorizontalAlignment="Right"
+                Width="320"
+                Background="#B3000000" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2">
+
+            <Grid Margin="30">
+
+                <StackPanel VerticalAlignment="Center">
+
+                    <!-- Título -->
+                    <TextBlock Text="INICIAR SESIÓN"
+                               Foreground="White"
+                               FontSize="29"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,40"/>
+
+                    <!-- Usuario -->
+                    <Grid Margin="0,0,0,20">
+
+                        <Border Background="#CC000000"
+            CornerRadius="10">
+
+                            <Grid>
+
+
+                                <TextBox x:Name="txtUsuario"
+                     Height="43"
+                     Background="Transparent"
+                     Foreground="White"
+                     BorderThickness="0"
+                     Padding="15,0"
+                     FontSize="14"
+                     CaretBrush="White"
+                     VerticalContentAlignment="Center" TextChanged="txtUsuario_TextChanged"
+                     />
+
+
+                                <TextBlock x:Name="txtPlaceholderUsuario"
+                       Text="Usuario"
+                       Foreground="#CCFFFFFF"
+                       Margin="15,0,0,0"
+                       VerticalAlignment="Center"
+                       IsHitTestVisible="False"/>
+
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                    <!-- PASSWORD -->
+                    <Grid Margin="0,0,0,30"
+      Width="252">
+
+                        <Border Background="#CC000000"
+            CornerRadius="10">
+
+                            <Grid>
+
+                                <!-- Password oculta -->
+                                <PasswordBox x:Name="passOculta"
+                         Height="43"
+                         Background="Transparent"
+                         Foreground="White"
+                         BorderThickness="0"
+                         Padding="15,0,45,0"
+                         FontSize="14"
+                         CaretBrush="White"
+                         VerticalContentAlignment="Center" PasswordChanged="passOculta_PasswordChanged"
+                                             
+                         />
+
+                                <!-- Password visible -->
+                                <TextBox x:Name="passVisible"
+                     Height="43"
+                     Background="Transparent"
+                     Foreground="White"
+                     BorderThickness="0"
+                     Padding="15,0,45,0"
+                     FontSize="14"
+                      CaretBrush="White"                    
+                     VerticalContentAlignment="Center"
+                     
+                     Visibility="Collapsed" TextChanged="passVisible_TextChanged" 
+                                         />
+
+                                <!-- Placeholder -->
+                                <TextBlock x:Name="txtPlaceholderPassword"
+                       Text="Contraseña"
+                       Foreground="#CCFFFFFF"
+                       Margin="15,0,0,0"
+                       VerticalAlignment="Center"
+                                          
+                       IsHitTestVisible="False"/>
+
+                                <!-- Botón ojo -->
+
+                                <Button x:Name="btnMostrar"
+        Width="24"
+        Height="24"
+        HorizontalAlignment="Right"
+        Margin="0,0,10,0"
+        VerticalAlignment="Center"
+        Background="Transparent"
+        BorderThickness="0"
+        Cursor="Hand"
+        FocusVisualStyle="{x:Null}"
+        Click="btnMostrar_Click">
+
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="Transparent">
+                                                <ContentPresenter
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+
+                                    <Image x:Name="imgOjo"
+           Source="pack://application:,,,/Resources/eyeClose.png"
+           Stretch="Uniform"/>
+                                </Button>
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                    <!-- Botón ingresar -->
+                    <Button x:Name="btnIngresar"
+                            Content="Ingresar"
+                            Height="40"
+                            Background="#750E0E"
+                            Foreground="White"
+                            BorderThickness="0"
+                            FontWeight="SemiBold"
+                            Cursor="Hand"
+                            Click="btnIngresar_Click">
+
+                        <Button.Style>
+                            <Style TargetType="Button">
+
+                                <Setter Property="Template">
+
+                                    <Setter.Value>
+
+                                        <ControlTemplate TargetType="Button">
+
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="15">
+
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+
+                                            </Border>
+
+                                        </ControlTemplate>
+
+                                    </Setter.Value>
+
+                                </Setter>
+
+                            </Style>
+                        </Button.Style>
+
+                    </Button>
+
+                    <!-- Registrarse -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,16,0,0">
+                        <TextBlock Text="¿No tienes cuenta? "
+               Foreground="#99FFFFFF"
+               FontSize="12"
+               VerticalAlignment="Center"/>
+                        <TextBlock x:Name="txtRegistrate" Text="Regístrate"
+               Foreground="#E6EBEA"
+               FontSize="12"
+               FontWeight="SemiBold"
+               Cursor="Hand"
+               VerticalAlignment="Center" MouseLeftButtonDown="txtRegistrate_MouseLeftButtonDown">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextDecorations" Value="None"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="TextDecorations" Value="Underline"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                            <TextBlock.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{x:Null}"/>
+                            </TextBlock.InputBindings>
+                            <TextBlock.Triggers>
+                                <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                </EventTrigger>
+                            </TextBlock.Triggers>
+                        </TextBlock>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</Window>
+
+    

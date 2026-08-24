@@ -1,0 +1,597 @@
+﻿<Window x:Class="PoderJudicial.Views.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PoderJudicial.Views"
+        mc:Ignorable="d"
+        Title="Dashboard"
+        Height="450"
+        Width="800"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize" Cursor="">
+
+    <!-- RECURSOS -->
+    <Window.Resources>
+
+
+
+        <!-- COLORES -->
+        <SolidColorBrush x:Key="SidebarBg" Color="#1A1F2E"/>
+        <SolidColorBrush x:Key="SidebarItemHover" Color="#252B3B"/>
+        <SolidColorBrush x:Key="AccentGreen" Color="#2ECC8F"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#8B92A5"/>
+        <SolidColorBrush x:Key="ContentBg" Color="#F3F4F6"/>
+
+        <!-- ESTILO BOTONES -->
+        <Style x:Key="SidebarButtonStyle"
+           TargetType="Button">
+
+            <Setter Property="Background"
+                Value="Transparent"/>
+
+            <Setter Property="BorderThickness"
+                Value="0"/>
+
+            <Setter Property="Foreground"
+                Value="#8B92A5"/>
+
+            <Setter Property="HorizontalContentAlignment"
+                Value="Left"/>
+
+            <Setter Property="Padding"
+                Value="12,12"/>
+
+            <Setter Property="Cursor"
+                Value="Hand"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border x:Name="BorderBg"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            Margin="6,2">
+
+                            <ContentPresenter HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <!-- HOVER -->
+                            <Trigger Property="IsMouseOver"
+                                 Value="True">
+
+                                <Setter TargetName="BorderBg"
+                                    Property="Background"
+                                    Value="{StaticResource SidebarItemHover}"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+        <!-- SIDEBAR EXPANDIR / CONTRAER -->
+        <Storyboard x:Key="SidebarExpandStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SidebarBorder"
+                              Storyboard.TargetProperty="Width"
+                              To="260" Duration="0:0:0.18"
+                              DecelerationRatio="0.6"/>
+
+            <DoubleAnimation Storyboard.TargetName="TxtLogoTitulo" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtLogoSubtitulo" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtMenuPrincipal" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtHomeLabel" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtConsultarLabel" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtFlechaConsultar" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtNuevoLabel" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtCopiasLabel" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtReportesLabel" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtConfigLabel" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="txtNombreUsuario" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+            <DoubleAnimation Storyboard.TargetName="TxtRolUsuario" Storyboard.TargetProperty="Opacity"
+                              To="1" Duration="0:0:0.18" BeginTime="0:0:0.05"/>
+        </Storyboard>
+
+        <Storyboard x:Key="SidebarCollapseStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SidebarBorder"
+                              Storyboard.TargetProperty="Width"
+                              To="80" Duration="0:0:0.15"
+                              AccelerationRatio="0.6"/>
+
+            <DoubleAnimation Storyboard.TargetName="TxtLogoTitulo" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtLogoSubtitulo" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtMenuPrincipal" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtHomeLabel" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtConsultarLabel" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtFlechaConsultar" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtNuevoLabel" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtCopiasLabel" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtReportesLabel" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtConfigLabel" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="txtNombreUsuario" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+            <DoubleAnimation Storyboard.TargetName="TxtRolUsuario" Storyboard.TargetProperty="Opacity"
+                              To="0" Duration="0:0:0.08"/>
+        </Storyboard>
+
+    </Window.Resources>
+
+    <!-- CONTENIDO -->
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- SIDEBAR -->
+        <Border x:Name="SidebarBorder"
+            Grid.Column="0"
+            Width="80"
+            Background="{StaticResource SidebarBg}"
+            MouseEnter="SidebarBorder_MouseEnter"
+            MouseLeave="SidebarBorder_MouseLeave"
+            ClipToBounds="True">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- LOGO — funciona como acceso directo a Home. La acción de
+                     navegación vive en Logo_Click, no en el recurso gráfico
+                     de adentro (hoy un emoji, mañana podría ser una imagen/
+                     logo personalizado sin tocar esta lógica). -->
+                <Border Grid.Row="0"
+                    Padding="20,24,20,20"
+                    Background="Transparent"
+                    Cursor="Hand"
+                    MouseLeftButtonUp="Logo_Click">
+
+                    <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
+
+                        <Border Width="40"
+                            Height="40"
+                            CornerRadius="10"
+                            Background="{StaticResource AccentGreen}">
+
+                            <TextBlock Text="⚖"
+                                   FontSize="20"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"/>
+
+                        </Border>
+
+                        <StackPanel Margin="12,0,0,0">
+
+                            <TextBlock x:Name="TxtLogoTitulo"
+                                   Text="Sistema Judicial"
+                                   Foreground="White"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Opacity="0"/>
+
+                            <TextBlock x:Name="TxtLogoSubtitulo"
+                                   Text="Audiencias"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="11"
+                                   Opacity="0"/>
+
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </Border>
+
+                <!-- SEPARADOR -->
+                <Border Grid.Row="1"
+                    Height="1"
+                    Background="#252B3B"
+                    Margin="20,0"/>
+
+                <!-- MENÚ -->
+                <StackPanel Grid.Row="2"
+                        Margin="0,16,0,0">
+
+                    <TextBlock x:Name="TxtMenuPrincipal"
+                           Text="MENÚ PRINCIPAL"
+                           Foreground="#4A5168"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Opacity="0"
+                           Margin="28,0,0,8"/>
+
+                    <!-- CONSULTAR -->
+                    <StackPanel>
+
+
+                        <Button x:Name="BtnHome"
+    Style="{StaticResource SidebarButtonStyle}"
+    Height="48"
+    Click="BtnHome_Click">
+
+                            <StackPanel Orientation="Horizontal"
+            >
+
+                                <Border Width="3"
+            Height="24"                                    
+            CornerRadius="2"
+            Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+            Margin="0,0,10,0"
+            />
+
+                                <TextBlock Text="🏠"
+               FontSize="16"
+               Margin="0,0,10,0"
+               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                                <TextBlock x:Name="TxtHomeLabel"
+                                       Text="Home"
+               FontSize="13"
+               Opacity="0"
+               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+
+
+
+
+                        <!-- BOTON PRINCIPAL -->
+                        <Button x:Name="BtnConsultar"
+            Style="{StaticResource SidebarButtonStyle}"
+            Height="48"
+            Click="BtnConsultar_Click">
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Ícono: columna Auto — nunca se comprime,
+                                     a diferencia de antes donde competía por
+                                     espacio con la columna fija de la flecha
+                                     y terminaba recortado al contraer. -->
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+
+                                    <Border Width="3"
+                        Height="24"
+                        CornerRadius="2"
+                        Background="{Binding Foreground,
+                                    RelativeSource={RelativeSource AncestorType=Button}}"
+                        Margin="0,0,10,0"/>
+
+                                    <TextBlock Text="▦"
+                           FontSize="16"
+                           Foreground="{Binding Foreground,
+                                       RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                                </StackPanel>
+
+                                <TextBlock x:Name="TxtConsultarLabel"
+                                       Grid.Column="1"
+                                       Text="Consultar Registros"
+                           FontSize="13"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Opacity="0"
+                           Foreground="{Binding Foreground,
+                                       RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                                <!-- FLECHA -->
+                                <TextBlock x:Name="TxtFlechaConsultar"
+                       Grid.Column="2"
+                       Text="▼"
+                       FontSize="12"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Opacity="0"
+                       Foreground="{Binding Foreground,
+                                   RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                            </Grid>
+
+                        </Button>
+
+                        <!-- SUBMENU -->
+                        <StackPanel x:Name="PanelTablas" Visibility="Collapsed"/>
+
+                    </StackPanel>
+
+
+                    <!-- NUEVO -->
+                    <Button x:Name="BtnNuevo"
+                        Style="{StaticResource SidebarButtonStyle}"
+                        Height="48"
+                        Click="BtnNuevo_Click">
+
+                        <StackPanel Orientation="Horizontal"
+                                >
+
+                            <Border Width="3"
+                                Height="24"                                    
+                                CornerRadius="2"
+                                Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                Margin="0,0,10,0"
+                                />
+
+                            <TextBlock Text="📅"
+                                   FontSize="16"
+                                   Margin="0,0,10,0"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                            <TextBlock x:Name="TxtNuevoLabel"
+                                   Text="Nueva Audiencia"
+                                   FontSize="13"
+                                   Opacity="0"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+
+
+                    <!-- COPIAS -->
+                    <Button x:Name="BtnCopias"
+                Style="{StaticResource SidebarButtonStyle}"
+                Height="48"
+                Click="BtnCopias_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="3"
+                  Height="24"
+                  CornerRadius="2"
+                  Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                  Margin="0,0,10,0"/>
+
+                            <TextBlock Text="💽"
+                  FontSize="16"
+                  Margin="0,0,10,0"
+                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                            <TextBlock x:Name="TxtCopiasLabel"
+                                   Text="Registro de Copias"
+                  FontSize="13"
+                  Opacity="0"
+                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+                    <!-- REPORTES -->
+                    <Button x:Name="BtnReportes"
+                        Style="{StaticResource SidebarButtonStyle}"
+                        Height="48"
+                        Click="BtnReportes_Click">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Border Width="3"
+                                Height="24"
+                                CornerRadius="2"
+                                Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                Margin="0,0,10,0"/>
+
+                            <TextBlock Text="📋"
+                                   FontSize="16"
+                                   Margin="0,0,10,0"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                            <TextBlock x:Name="TxtReportesLabel"
+                                   Text="Reportes"
+                                   FontSize="13"
+                                   Opacity="0"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+                    <!-- CONFIG -->
+                    <Button x:Name="BtnConfig"
+                        Style="{StaticResource SidebarButtonStyle}"
+                        Height="48"
+                        Click="BtnConfig_Click">
+
+                        <Button.ContextMenu>
+                            <ContextMenu x:Name="MenuConfig"
+                            Background="White"
+                            BorderBrush="#D1D5DB"
+                            BorderThickness="1">
+
+                                <ContextMenu.Resources>
+
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Padding" Value="12,8"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                    </Style>
+
+                                </ContextMenu.Resources>
+
+                                <MenuItem Header="☀ Modo Claro"
+          Click="ModoClaro_Click"/>
+
+                                <MenuItem Header="🌙 Modo Oscuro"
+          Click="ModoOscuro_Click"/>
+
+                                <Separator/>
+
+                                <MenuItem Header="🗄 Base de Datos..."
+          Click="BaseDatos_Click"/>
+
+                                <MenuItem Header="🗂 Crear tabla..."
+          Click="CrearTabla_Click"/>
+
+                            </ContextMenu>
+                        </Button.ContextMenu>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Border Width="3"
+                                Height="24"
+                                CornerRadius="2"
+                                Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                Margin="0,0,10,0"/>
+
+                            <TextBlock Text="⚙"
+                                   FontSize="16"
+                                   Margin="0,0,10,0"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                            <TextBlock x:Name="TxtConfigLabel"
+                                   Text="Configuración"
+                                   FontSize="13"
+                                   Opacity="0"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+                </StackPanel>
+
+                <!-- FOOTER -->
+                <Border Grid.Row="3"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="#252B3B"
+                    Padding="20,16">
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Width="36"
+                            Height="36"
+                            CornerRadius="18"
+                            Background="{StaticResource AccentGreen}">
+
+                            <TextBlock x:Name="txtAvatar"
+       Text="A"
+       Foreground="White"
+       FontSize="15"
+       FontWeight="Bold"
+       HorizontalAlignment="Center"
+       VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <StackPanel Grid.Column="1"
+                                Margin="10,0,0,0">
+
+                            <TextBlock x:Name="txtNombreUsuario"
+       Text="Admin Sistema"
+       Foreground="White"
+       FontSize="12"
+       Opacity="0"
+       FontWeight="SemiBold"/>
+
+                            <TextBlock x:Name="TxtRolUsuario"
+                                   Text="Admin"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="11"
+                                   Opacity="0"/>
+
+                        </StackPanel>
+                        <Button x:Name="BtnRegresar"
+    Grid.Column="1"
+    Width="30"
+    Height="30"
+    Background="Transparent"
+    BorderThickness="0"
+    FocusVisualStyle="{x:Null}"
+    Focusable="False"
+    Cursor="Hand"
+    ToolTip="Cerrar sesión"
+    VerticalAlignment="Center"
+    Margin="136,0,18,0"
+    Click="BtnRegresar_Click">
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="Transparent">
+                                        <ContentPresenter
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                            <TextBlock Text="↪️"
+           FontSize="16"
+           Foreground="{StaticResource TextSecondary}"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"/>
+                        </Button>
+
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+        </Border>
+
+        <!-- PANEL -->
+        <Border Grid.Column="1"
+            Background="{StaticResource ContentBg}">
+
+            <Frame x:Name="MainFrame"
+               NavigationUIVisibility="Hidden"
+               Background="{StaticResource ContentBg}"/>
+
+        </Border>
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,273 @@
+<Window x:Class="PoderJudicial.Views.VerDetalleEjecucion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Detalle del Registro — Ejecución"
+        Height="600" Width="520"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <!--
+        Misma plantilla visual que VerDetalleRegistro.xaml (Audiencias),
+        pero mostrando únicamente los campos reales de la tabla Ejecucion
+        (ver Models/Ejecucion.cs). Ventana independiente en vez de reutilizar
+        VerDetalleRegistro para no arrastrar controles vacíos que no
+        corresponden a este tipo de registro.
+    -->
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground"
+            Value="{DynamicResource SecondaryTextBrush}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,3"/>
+        </Style>
+        <Style x:Key="ValorStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="Foreground"
+            Value="{DynamicResource PrimaryTextBrush}"/>
+        </Style>
+    </Window.Resources>
+
+    <Border CornerRadius="8"
+        Background="{DynamicResource CardBrush}"
+        Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="45"
+                  ShadowDepth="10"
+                  Color="#000000"
+                  Opacity="0.85"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="58"/>
+            </Grid.RowDefinitions>
+
+            <!-- HEADER -->
+            <Border Grid.Row="0"
+        CornerRadius="8,8,0,0"
+        Background="{DynamicResource CardBrush}"
+        BorderBrush="{DynamicResource BorderBrush}"
+        BorderThickness="0,0,0,1">
+                <Grid>
+                    <TextBlock Text="Detalle del Registro — Ejecución"
+                               FontFamily="Segoe UI Semibold"
+                               FontSize="17"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
+                               VerticalAlignment="Center"
+                               Margin="24,0,0,0"/>
+                    <Button x:Name="BtnCerrar"
+                            Content="✕"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0,0,16,0"
+                            Width="28" Height="28"
+                            FontSize="13"
+                            Foreground="{DynamicResource SecondaryTextBrush}"
+                            Cursor="Hand" Click="BtnCerrar_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border"
+                                                    Background="Transparent"
+                                                    BorderBrush="{DynamicResource BorderBrush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border"
+        Property="Background"
+        Value="{DynamicResource HoverBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- CONTENIDO -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <Grid Margin="24,16,24,24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- ID / EXPEDIENTE -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="ID" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtID" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="EXPEDIENTE" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtExpediente" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- CAUSA / FECHA AUDIENCIA -->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="CAUSA" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtCausa" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="FECHA AUDIENCIA" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtFechaAudiencia" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- TIPO AUDIENCIA / HORA TÉRMINO -->
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="TIPO AUDIENCIA" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtTipoAudiencia" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="HORA TÉRMINO" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtHoraTermino" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- JUEZ / SALA -->
+                    <Grid Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="JUEZ" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtJuez" Text="-" Style="{StaticResource ValorStyle}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="SALA" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtSala" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- IMPUTADO / DELITO -->
+                    <Grid Grid.Row="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="IMPUTADO" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtImputado" Text="-" Style="{StaticResource ValorStyle}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="DELITO" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtDelito" Text="-" Style="{StaticResource ValorStyle}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- VÍCTIMA / TOTAL DISCOS -->
+                    <Grid Grid.Row="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="VÍCTIMA" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtVictima" Text="-" Style="{StaticResource ValorStyle}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="TOTAL DISCOS" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtTotalDiscos" Text="-" Style="{StaticResource ValorStyle}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- OBSERVACIONES (Quien realiza / videoconferencia / concentrada) -->
+                    <Grid Grid.Row="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="OBSERVACIONES" Style="{StaticResource LabelStyle}"/>
+                            <TextBlock x:Name="TxtObservaciones" Text="-" Style="{StaticResource ValorStyle}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Grid>
+
+                </Grid>
+            </ScrollViewer>
+
+            <!-- PIE DE VENTANA -->
+            <Border Grid.Row="2"
+                    Background="{DynamicResource CardBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="0,1,0,0"
+                    CornerRadius="0,0,8,8">
+                <Grid Margin="16,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="BtnEtiquetas"
+                            Grid.Column="1"
+                            Content="Etiquetas"
+                            Width="100"
+                            Height="34"
+                            Cursor="Hand"
+                            Foreground="#2563EB"
+                            Background="Transparent"
+                            BorderBrush="#2563EB"
+                            BorderThickness="1"
+                            Click="BtnEtiquetas_Click"/>
+
+                    <Button Grid.Column="3"
+                            Content="Cerrar"
+                            Width="78"
+                            Height="34"
+                            Cursor="Hand"
+                            Click="BtnCerrar_Click"/>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

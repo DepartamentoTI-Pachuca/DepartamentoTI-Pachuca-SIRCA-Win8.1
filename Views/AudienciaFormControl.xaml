@@ -1,0 +1,960 @@
+﻿<UserControl x:Class="PoderJudicial.Views.AudienciaFormControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Background="{DynamicResource BackgroundBrush}">
+
+    <UserControl.Resources>
+
+
+        <!-- ── Estilo base TextBlock etiqueta ── -->
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <!-- ── Estilo base TextBox ── -->
+        <Style x:Key="InputStyle" TargetType="TextBox">
+
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="TextBox">
+
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="8"
+                        Padding="{TemplateBinding Padding}">
+
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                  VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush"
+                                Value="#2ECC8F"/>
+
+                                <Setter Property="Background"
+                                Value="{DynamicResource HoverBrush}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <!-- ── Estilo base ComboBox ── -->
+        <Style x:Key="ComboStyle" TargetType="ComboBox">
+
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ComboBox">
+
+                        <Grid>
+
+                            <!-- BOTÓN PRINCIPAL -->
+                            <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- TEXTO -->
+                                    <TextBlock Text="{TemplateBinding SelectionBoxItem}"
+                                         Margin="12,0,0,0"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Left"
+                                         Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                                    <!-- FLECHA -->
+                                    <TextBlock Grid.Column="1"
+                                       Text="▼"
+                                       FontSize="10"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+
+                                    
+                                    <!-- BOTÓN -->
+                                    <ToggleButton Grid.ColumnSpan="2"
+                                       Background="Transparent"
+                                       BorderThickness="0"
+                                       Focusable="False"
+                                       IsChecked="{Binding IsDropDownOpen,
+                                       RelativeSource={RelativeSource TemplatedParent},
+                                       Mode=TwoWay}">
+                                        <ToggleButton.Template>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Border Background="Transparent"/>
+                                            </ControlTemplate>
+                                        </ToggleButton.Template>
+                                    </ToggleButton>
+                                </Grid>
+
+                            </Border>
+
+                            <!-- POPUP -->
+                            <Popup x:Name="Popup"
+                           Placement="Bottom"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           PopupAnimation="Slide">
+
+                                <Border Background="{DynamicResource CardBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Margin="0,4,0,0">
+
+                                    <ScrollViewer MaxHeight="250">
+
+                                        <StackPanel IsItemsHost="True"/>
+
+                                    </ScrollViewer>
+
+                                </Border>
+
+                            </Popup>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush"
+            Value="{DynamicResource BorderBrush}"/>
+                            </Trigger>
+
+
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border"
+                                Property="BorderBrush"
+                                Value="#2ECC8F"/>
+                            </Trigger>
+
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="BorderBrush"
+            Value="{DynamicResource BorderBrush}"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+            
+
+               
+
+        </Style>
+
+        <!-- ── Estilo Item Combobox ── -->        
+
+        <Style TargetType="ComboBoxItem">
+
+            <Setter Property="Foreground"
+            Value="{DynamicResource PrimaryTextBrush}"/>
+
+            <Setter Property="Background"
+            Value="{DynamicResource CardBrush}"/>
+
+            <Setter Property="Padding"
+            Value="10,6"/>
+
+            <Setter Property="FontSize"
+            Value="13"/>
+
+            <Style.Triggers>
+
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background"
+                    Value="{DynamicResource HoverBrush}"/>
+                </Trigger>
+
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background"
+                    Value="#2ECC8F"/>
+
+                    <Setter Property="Foreground"
+                    Value="White"/>
+                </Trigger>
+
+            </Style.Triggers>
+
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid 
+          VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch"
+          >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ══════════════════════════════════
+                 HEADER
+             ══════════════════════════════════ -->
+
+        <Border Grid.Row="0"
+        Background="{DynamicResource CardBrush}"
+        BorderThickness="0,0,0,1"
+        BorderBrush="{DynamicResource BorderBrush}"
+        Padding="32,18"
+                Margin="0,0,0,30">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+
+                    <TextBlock Text="Nuevo Registros"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <TextBlock x:Name="TxtSubtitulo"
+                       Text="Complete los campos en el orden indicado."
+                       FontSize="12"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       Margin="0,3,0,0"/>
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                    HorizontalAlignment="Right">
+
+                    <TextBlock x:Name="TxtHora"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       HorizontalAlignment="Right"/>
+
+                    <TextBlock x:Name="TxtFecha"
+                       FontSize="12"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       HorizontalAlignment="Right"
+                       Margin="0,2,0,0"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+        <!-- ══════════════ SCROLL CONTENIDO ══════════════ -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Border Background="{DynamicResource CardBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="16"
+                    Padding="36,32"
+                    Margin="35,0,35,35">
+                <StackPanel>
+
+                    <!-- ─── FILA 1: Id | Fecha y Hora Audiencia | Fecha y Hora Recibo ─── -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Id -->
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Id" Style="{StaticResource LabelStyle}"/>
+                                <TextBlock Text=" *" Foreground="#EF4444" FontWeight="Bold" Margin="0,0,0,6"/>
+                            </StackPanel>
+                            <TextBox x:Name="TxtId"
+                                  Style="{StaticResource InputStyle}"
+                                  IsReadOnly="True"
+                                  Focusable="False"
+                                  Cursor="Arrow"
+                                  Background="{DynamicResource HoverBrush}" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        </StackPanel>
+
+                        <!-- Fecha y Hora Audiencia -->
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Fecha y Hora Audiencia" Style="{StaticResource LabelStyle}"/>
+                                <TextBlock Text=" *" Foreground="#EF4444" FontWeight="Bold" Margin="0,0,0,6"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="130"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtFechaAudiencia"
+                                         Grid.Column="0"
+                                         Style="{StaticResource InputStyle}"
+                                         Tag="Ej: 25/12/2024"
+                                         TextChanged="TxtFechaAudiencia_TextChanged"
+                                         PreviewTextInput="SoloNumeros_PreviewTextInput"
+                                       />
+                                <!-- ★ txt de hora-->
+                                <TextBox x:Name="TxtHoraAudiencia"
+                                          Grid.Column="2"
+                                           Style="{StaticResource InputStyle}"
+                                         PreviewTextInput="SoloNumeros_PreviewTextInput"                                       
+                                         TextChanged="TxtHoraAudiencia_TextChanged"
+                                          />
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Fecha y Hora Recibo -->
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Fecha y Hora Recibo" Style="{StaticResource LabelStyle}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="130"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtFechaRecibo"
+                                      Grid.Column="0"
+                                      Style="{StaticResource InputStyle}"
+                                      IsReadOnly="True"
+                                      Focusable="False"
+                                      Cursor="Arrow"
+                                      Background="{DynamicResource HoverBrush}" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <!-- ★ txt de hora-->
+                                <TextBox x:Name="TxtHoraRecibo"
+                                     Grid.Column="2"
+                                     Style="{StaticResource InputStyle}"
+                                     IsReadOnly="True"
+                                     Focusable="False"
+                                     Cursor="Arrow"
+                                     Background="{DynamicResource HoverBrush}" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- ─── SEPARADOR ─── -->
+                    <Separator Background="{DynamicResource BorderBrush}" Margin="0,4,0,20"/>
+
+                    <!-- ─── FILA 2: Total Discos | Tipo Disco | Juzgado ─── -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tipo Disco -->
+                        <StackPanel Grid.Column="0">
+
+                            <TextBlock Text="Total Archivo"
+         Style="{StaticResource LabelStyle}"/>
+
+                            <ComboBox x:Name="CmbTipoDisco"
+              Style="{StaticResource ComboStyle}"
+              SelectedIndex="0">
+
+                                <ComboBoxItem Content="1 Archivo"/>
+                                <ComboBoxItem Content="2 Archivos"/>
+                                <ComboBoxItem Content="3 Archivos"/>
+                                <ComboBoxItem Content="4 Archivos"/>
+                                <ComboBoxItem Content="5 Archivos"/>
+                                <ComboBoxItem Content="6 Archivos"/>
+                                <ComboBoxItem Content="7 Archivos"/>
+                                <ComboBoxItem Content="8 Archivos"/>
+                                <ComboBoxItem Content="9 Archivos"/>
+                                <ComboBoxItem Content="10 Archivos"/>
+
+                            </ComboBox>
+
+                        </StackPanel>
+
+                        <!-- Total Disco Audiencia -->
+                        <StackPanel Grid.Column="2">
+
+                            <TextBlock Text="Total Disco Audiencia"
+               Style="{StaticResource LabelStyle}"/>
+
+                            <ComboBox x:Name="CmbTotDiscoAudiencia"
+              Style="{StaticResource ComboStyle}"
+              SelectedIndex="1"
+              SelectionChanged="CmbTotDiscoAudiencia_SelectionChanged">
+
+                                <ComboBoxItem Content="Seleccione cantidad"/>
+                                <ComboBoxItem Content="1 disco"/>
+                                <ComboBoxItem Content="2 discos"/>
+                                <ComboBoxItem Content="3 discos"/>
+                                <ComboBoxItem Content="4 discos"/>
+                                <ComboBoxItem Content="5 discos"/>
+                                <ComboBoxItem Content="Otro..."/>
+
+                            </ComboBox>
+
+                            <TextBox x:Name="TxtTotDiscoAudienciaOtro"
+                                     Style="{StaticResource InputStyle}"
+                                     Margin="0,6,0,0"
+                                     Visibility="Collapsed"
+                                     Tag="Cantidad"/>
+
+                        </StackPanel>
+
+                        <!-- Juzgado -->
+                        <StackPanel Grid.Column="4">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Juzgado" Style="{StaticResource LabelStyle}"/>
+                                <TextBlock Text=" *" Foreground="#EF4444" FontWeight="Bold" Margin="0,0,0,6"/>
+                            </StackPanel>
+                            <ComboBox x:Name="CmbJuzgado"
+                                      Style="{StaticResource ComboStyle}"
+                                      SelectionChanged="CmbJuzgado_SelectionChanged"
+                                      SelectedIndex="1">
+                                <ComboBoxItem Content="Seleccione juzgado"/>
+                                <ComboBoxItem Content="Control"/>
+                                <ComboBoxItem Content="Centro"/>
+                                <ComboBoxItem Content="Otra..."/>
+                            </ComboBox>
+                            <TextBox x:Name="TxtJuzgadoOtro"
+                                     Style="{StaticResource InputStyle}"
+                                     Margin="0,6,0,0"
+                                     Visibility="Collapsed"
+                                     Tag="Especifique el juzgado"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- ─── FILA 3: Total Disco Audiencia (ancho parcial) ─── -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                    </Grid>
+
+                    <!-- ─── SEPARADOR ─── -->
+                    <Separator Background="{DynamicResource BorderBrush}" Margin="0,4,0,20"/>
+
+                    <StackPanel Grid.Column="4">
+                        <TextBlock Text="Tipo Causa" Style="{StaticResource LabelStyle}"/>
+                        <ComboBox x:Name="CmbTipoCausa" Style="{StaticResource ComboStyle}"
+                              SelectedIndex="1"
+                              SelectionChanged="CmbTipoCausa_SelectionChanged">
+                            <ComboBoxItem Content="Seleccione tipo"/>
+                            <ComboBoxItem Content="C"/>
+                            <ComboBoxItem Content="CP"/>
+                            <ComboBoxItem Content="JO"/>
+                            <ComboBoxItem Content="EXP"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- ─── FILA 4: Juez(ces) ─── -->
+                    <StackPanel Margin="0,20,0,20">
+                        <TextBlock Text="Juez(es)" Style="{StaticResource LabelStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="42"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Contenedor -->
+                            <StackPanel Grid.Column="0">
+
+                                <TextBox
+                                      x:Name="TxtJuez"
+                                      TextChanged="txtJuez_TextChanged"
+                                      PreviewKeyDown="TxtAutocomplete_PreviewKeyDown"
+                                      Tag="Escriba el nombre del juez"
+                                      Style="{StaticResource InputStyle}"/>
+
+                                <ListBox
+                                      x:Name="lstSugerencias"
+                                      PreviewKeyDown="lstAutocomplete_PreviewKeyDown"
+                                      MouseDoubleClick="lstAutocomplete_MouseClick"
+                                      Visibility="Collapsed"
+                                      Height="120"/>
+                            </StackPanel>
+
+                            <!-- Botón + -->
+                            <Button x:Name="BtnAgregarJuez"
+                                           Grid.Column="2"
+                                           Content="+"
+                                           Height="42"
+                                           Width="42"
+                                           FontSize="20"
+                                           FontWeight="Light"
+                                           Cursor="Hand"
+                                           Background="#2ECC8F"
+                                           Foreground="White"
+                                           BorderBrush="#E5E7EB"
+                                           BorderThickness="1"
+                                           Click="BtnAgregarJuez_Click"
+                                           VerticalAlignment="Center" Margin="2,0,-2,0">
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="8">
+
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#F9FAFB"/>
+                                                <Setter Property="BorderBrush" Value="#2ECC8F"/>
+                                                <Setter Property="Foreground" Value="#2ECC8F"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+
+                            </Button>
+                        </Grid>
+                        <!-- Panel dinámico jueces extra -->
+                        <StackPanel x:Name="PanelJuecesExtra" Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- ─── SEPARADOR ─── -->
+                    <Separator Background="{DynamicResource BorderBrush}" Margin="0,4,0,20"/>
+
+                    <!-- ─── FILA 5: No. Causa | NUC | Tipo Causa ─── -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="No. Causa" Style="{StaticResource LabelStyle}"/>
+                             <TextBox x:Name="TxtNoCausa"
+                                     Style="{StaticResource InputStyle}"
+                                     PreviewTextInput="NoCausa_PreviewTextInput"
+                                     LostKeyboardFocus="TxtNoCausa_LostKeyboardFocus"
+                                     Tag="Ej: 123/2024"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" x:Name="PanelNUC">
+                            <TextBlock Text="NUC" Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="TxtNUC"
+                                     Style="{StaticResource InputStyle}"
+                                     PreviewTextInput="NUC_PreviewTextInput"
+                                     Tag="Ej: 12-2024-00567"/>
+                        </StackPanel>
+
+                        <StackPanel x:Name="PanelNoCausaJuicio" Grid.Column="4">
+                            <TextBlock Text="No. Causa Juicio" Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="TxtNoCausaJuicio"
+                                     Style="{StaticResource InputStyle}"
+                                     Tag="Ej: 89/2024"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- ─── FILA 6: Tipo Audiencia | Hora Conclusión | Imputado ─── -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0"/>
+                            <ColumnDefinition Width="0"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+
+                            <TextBlock Text="Tipo Audiencia"
+               Style="{StaticResource LabelStyle}"/>
+
+                            <TextBox x:Name="TxtTipoAudiencia"
+                                    Style="{StaticResource InputStyle}"
+                                    TextChanged="TxtTipoAudiencia_TextChanged"
+                                    PreviewKeyDown="TxtAutocomplete_PreviewKeyDown"
+                                    Tag="Escriba el tipo de audiencia"/>
+
+                            <ListBox x:Name="lstAudiencia"
+                                     MouseDoubleClick="lstAutocomplete_MouseClick"
+                                     PreviewKeyDown="lstAutocomplete_PreviewKeyDown"
+                                     Visibility="Collapsed"
+                                     Height="120"/>
+
+                        </StackPanel>
+
+                        <!-- Botón + -->
+                        <Button x:Name="BtnAgregarAudiencia"
+                                     Grid.Column="2"
+                                     Content="+"
+                                     Height="42"
+                                     Width="42"
+                                     FontSize="20"
+                                     FontWeight="Light"
+                                     Cursor="Hand"
+                                     Background="#2ECC8F"
+                                     Foreground="White"
+                                     BorderBrush="#E5E7EB"
+                                     BorderThickness="1"
+                                     Visibility="Collapsed"
+                                     VerticalAlignment="Top" Margin="2,23,-2,0">
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                     BorderBrush="{TemplateBinding BorderBrush}"
+                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                     CornerRadius="8">
+
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#F9FAFB"/>
+                                            <Setter Property="BorderBrush" Value="#2ECC8F"/>
+                                            <Setter Property="Foreground" Value="#2ECC8F"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+
+                    </Grid>
+                    <!-- Panel dinámico jueces extra -->
+                    <StackPanel x:Name="PanelAudienciaExtra" Margin="0,8,0,0"/>
+                    
+                    <!-- ─── FILA 6: Tipo Audiencia | Hora Conclusión | Imputado ─── -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Hora Conclusión" Style="{StaticResource LabelStyle}"/>
+                            <!-- ★ TextBox de horas-->
+                            <TextBox x:Name="TxtHoraConclusion"
+                Grid.Column="2"
+                Style="{StaticResource InputStyle}"
+                PreviewTextInput="SoloNumeros_PreviewTextInput"
+                TextChanged="TxtHoraConclusion_TextChanged" 
+                 />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Imputado" Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="TxtImputado"
+                              Style="{StaticResource InputStyle}"
+                               Tag="Nombre del imputado"/>
+                        </StackPanel>
+
+                        <Button Grid.Column="4"
+                                Content="+"
+                                Width="42"
+                                Height="42"
+                                Margin="0,23,0,0"
+                                VerticalAlignment="Top"
+                                FontSize="20"
+                                Cursor="Hand"
+                                Background="#2ECC8F"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="BtnAgregarImputado_Click"/>
+                    </Grid>
+
+                    <StackPanel x:Name="PanelImputadosExtra" Margin="0,0,0,12"/>
+
+
+
+                    <!-- ─── FILA 7: Delito ─── -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="42"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Delito" Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="TxtDelito"
+                                     Style="{StaticResource InputStyle}"
+                                     Tag="Tipo de delito"
+                                     TextChanged="TxtDelito_TextChanged"
+                                     PreviewKeyDown="TxtAutocomplete_PreviewKeyDown"/>
+                            <ListBox
+                                x:Name="lstDelito"
+                                MouseDoubleClick="lstAutocomplete_MouseClick"
+                                PreviewKeyDown="lstAutocomplete_PreviewKeyDown"
+                                Visibility="Collapsed"
+                                Height="120"/>
+                        </StackPanel>
+                        <!-- Botón + -->
+                        <Button x:Name="BtnAgregarDelito"
+                                     Grid.Column="2"
+                                     Content="+"
+                                     Width="42"
+                                     FontSize="20"
+                                     FontWeight="Light"
+                                     Cursor="Hand"
+                                     Background="#2ECC8F"
+                                     Foreground="White"
+                                     BorderBrush="#E5E7EB"
+                                     BorderThickness="1"
+                                     Click="BtnAgregarDelito_Click" Height="42" VerticalAlignment="Top" Margin="0,23,0,0">
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                       CornerRadius="8">
+
+                                        <ContentPresenter HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#F9FAFB"/>
+                                            <Setter Property="BorderBrush" Value="#2ECC8F"/>
+                                            <Setter Property="Foreground" Value="#2ECC8F"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+
+
+                    </Grid>
+                    <!-- Panel dinámico jueces extra -->
+                    <StackPanel x:Name="PanelDelitoExtra" Margin="0,8,0,0"/>
+
+                    <!-- ─── SEPARADOR ─── -->
+                    <Separator Background="{DynamicResource BorderBrush}" Margin="0,4,0,20"/>
+
+                    <!-- ─── FILA 8: No. Causa Juicio | Diferida | Quien Realiza ─── -->
+                    <Grid Margin="0,0,0,32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Agraviado" Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="TxtAgraviado"
+             Style="{StaticResource InputStyle}"
+             Tag="Nombre del agraviado"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Sala" Style="{StaticResource LabelStyle}"/>
+                                <TextBlock Text=" *" Foreground="#EF4444" FontWeight="Bold" Margin="0,0,0,6"/>
+                            </StackPanel>
+                            <ComboBox x:Name="CmbSala" Style="{StaticResource ComboStyle}"
+                                      SelectedIndex="0">
+                                <ComboBoxItem Content="Seleccione sala"/>
+                                <ComboBoxItem Content="I"/>
+                                <ComboBoxItem Content="II"/>
+                                <ComboBoxItem Content="III"/>
+                                <ComboBoxItem Content="IV"/>
+                                <ComboBoxItem Content="V"/>
+                                <ComboBoxItem Content="VI"/>
+                                <ComboBoxItem Content="VII"/>
+                                <ComboBoxItem Content="VIII"/>
+                                <ComboBoxItem Content="IX"/>
+                                <ComboBoxItem Content="CJPM"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- CAMPOS EXP -->
+                    <StackPanel x:Name="PanelCamposEXP"
+            Visibility="Collapsed"
+            Margin="0,0,0,32">
+
+                        <!-- EXPEDIENTE -->
+                        <StackPanel Margin="0,0,0,16">
+
+                            <TextBlock Text="Expediente"
+                   Style="{StaticResource LabelStyle}"/>
+
+                            <TextBox x:Name="TxtExpediente"
+                 Style="{StaticResource InputStyle}"
+                 PreviewTextInput="Expediente_PreviewTextInput"/>
+                        </StackPanel>
+
+                        <!-- OBSERVACIONES -->
+                        <StackPanel>
+
+                            <TextBlock Text="Observaciones"
+                   Style="{StaticResource LabelStyle}"/>
+
+                            <TextBox x:Name="TxtObservaciones"
+                 Height="80"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 Style="{StaticResource InputStyle}"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- ─── FILA 9: Modalidad de audiencia (aplica a C, CP, JO, EXP) ─── -->
+                    <Grid Margin="0,0,0,32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="¿Videoconferencia?" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox x:Name="CmbVideoconferencia"
+                                      Style="{StaticResource ComboStyle}"
+                                      SelectedIndex="0">
+                                <ComboBoxItem Content="No"/>
+                                <ComboBoxItem Content="Sí"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- ─── SEPARADOR ─── -->
+                    <Separator Background="{DynamicResource BorderBrush}" Margin="0,0,0,24"/>
+
+                    <!-- ─── BOTONES: CONCENTRADA / GUARDAR ─── -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                        <Button x:Name="BtnConcentrada"
+                                Content="Concentrada"
+                                Height="44" Width="150"
+                                Cursor="Hand"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Margin="0,0,12,0"
+                                Foreground="{DynamicResource PrimaryTextBrush}"
+                                Click="BtnConcentrada_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="BtnBorder"
+                                            Background="{DynamicResource InputBrush}"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="BtnBorder" Property="Background" Value="{DynamicResource BorderBrush}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.4"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button x:Name="BtnGuardar"
+                                Content="Guardar Registro"
+                                Height="44" Width="180"
+                                Cursor="Hand"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Click="BtnGuardar_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="BtnBorder"
+                                            Background="#2ECC8F"
+                                            CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="BtnBorder" Property="Background" Value="#27B57D"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="BtnBorder" Property="Background" Value="#1F9E6C"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Button.Foreground>White</Button.Foreground>
+                        </Button>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

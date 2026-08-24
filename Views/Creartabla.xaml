@@ -1,0 +1,160 @@
+﻿<Window x:Class="PoderJudicial.Views.CrearTabla"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Title="Crear nueva tabla"
+        Height="420" Width="560"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{DynamicResource BackgroundBrush}">
+
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="{DynamicResource InputBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource InputTextBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ComboItemStyle" TargetType="ComboBoxItem" BasedOn="{StaticResource ThemedComboBoxItemStyle}">
+            <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Style.Triggers>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource HoverBrush}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource HeaderBrush}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
+                    <Setter Property="Opacity" Value="0.55"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ComboStyle" TargetType="ComboBox" BasedOn="{StaticResource ThemedComboBoxStyle}">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="{DynamicResource InputBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource InputTextBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="ItemContainerStyle" Value="{DynamicResource ComboItemStyle}"/>
+        </Style>
+        <Style x:Key="BtnSecundario" TargetType="Button">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="16,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{DynamicResource CardBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="1" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="BtnPrimario" TargetType="Button" BasedOn="{StaticResource BtnSecundario}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#2ECC8F" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{DynamicResource CardBrush}"
+            BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="12"
+            Margin="16">
+        <Grid Margin="28,24,28,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Crear nueva tabla"
+                       FontSize="18" FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+            <TextBlock Grid.Row="1"
+                       Text="Selecciona una tabla existente como plantilla. Se copiará únicamente su estructura, sin los registros."
+                       FontSize="12" Foreground="{DynamicResource SecondaryTextBrush}"
+                       Margin="0,4,0,0" TextWrapping="Wrap"/>
+
+            <!-- Aviso: no hay ninguna tabla de Audiencias todavía -->
+            <Border x:Name="PanelSinPlantillas" Grid.Row="2" Visibility="Collapsed"
+                    Background="#FFFBEB" BorderBrush="#FCD34D" BorderThickness="1"
+                    CornerRadius="8" Padding="12,10" Margin="0,14,0,0">
+                <TextBlock TextWrapping="Wrap" Foreground="#92400E" FontSize="12"
+                           Text="Todavía no hay ninguna tabla de Audiencias en esta base de datos, así que no hay una plantilla disponible. Crea la primera tabla directamente en Access; después de eso, esta ventana podrá usarla como plantilla para los siguientes periodos."/>
+            </Border>
+
+            <!-- Banner de error -->
+            <Border x:Name="PanelError" Grid.Row="3" Visibility="Collapsed"
+                    Background="#FEF2F2" BorderBrush="#FCA5A5" BorderThickness="1"
+                    CornerRadius="8" Padding="12,10" Margin="0,14,0,0">
+                <TextBlock x:Name="TxtMensajeError" TextWrapping="Wrap"
+                           Foreground="#B91C1C" FontSize="12"/>
+            </Border>
+
+            <StackPanel Grid.Row="4" Margin="0,20,0,0">
+                <TextBlock Text="Tabla plantilla:" Style="{StaticResource LabelStyle}"/>
+                <ComboBox x:Name="CmbPlantilla" Style="{StaticResource ComboStyle}"
+                          ItemsSource="{Binding Plantillas}"
+                          SelectedItem="{Binding PlantillaSeleccionada, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="5" Margin="0,16,0,0">
+                <TextBlock Text="Nombre de la nueva tabla:" Style="{StaticResource LabelStyle}"/>
+                <TextBox x:Name="TxtNombre" Style="{StaticResource InputStyle}"
+                         Text="{Binding NombreNuevaTabla, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Puedes usar el nombre sugerido o escribir otro."
+                           FontSize="11" Foreground="{DynamicResource SecondaryTextBrush}"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                <Button x:Name="BtnCancelar" Content="Cancelar" Width="100"
+                        Style="{StaticResource BtnSecundario}" Margin="0,0,10,0"
+                        Click="BtnCancelar_Click"/>
+                <Button Content="Crear tabla" Width="140"
+                        Style="{StaticResource BtnPrimario}"
+                        Click="BtnCrear_Click"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>

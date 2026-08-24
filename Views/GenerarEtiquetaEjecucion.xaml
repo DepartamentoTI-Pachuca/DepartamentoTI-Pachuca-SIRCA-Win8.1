@@ -1,0 +1,221 @@
+<Window x:Class="PoderJudicial.Views.GenerarEtiquetaEjecucion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Generar etiqueta de ejecución"
+        Height="650"
+        Width="470"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <Style x:Key="DatoLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
+            <Setter Property="Margin" Value="0,3"/>
+        </Style>
+
+        <Style x:Key="DatoValor" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12.5"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="Margin" Value="0,3"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Margin="10"
+            CornerRadius="8"
+            Background="{DynamicResource CardBrush}"
+            BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1">
+
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30"
+                              ShadowDepth="8"
+                              Opacity=".35"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="62"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="0,0,0,1">
+                <Grid>
+                    <TextBlock x:Name="TxtTitulo"
+                               Margin="18,0,52,0"
+                               VerticalAlignment="Center"
+                               FontFamily="Segoe UI Semibold"
+                               FontSize="16"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+
+                    <Button Content="✕"
+                            Width="30"
+                            Height="30"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0,0,12,0"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="BtnCancelar_Click"/>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="18,14">
+
+                    <TextBlock Text="Datos del registro (información automática)"
+                               FontFamily="Segoe UI Semibold"
+                               FontSize="13.5"
+                               Foreground="{DynamicResource ReportBlueAccentBrush}"
+                               Margin="0,0,0,9"/>
+
+                    <Border BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="14,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Text="Expediente:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtExpediente" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="1" Text="No. causa:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtCausa" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="2" Text="Sentenciado:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtImputado" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="3" Text="Delito:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TxtDelito" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="4" Text="Víctima / Ofendido:" Style="{StaticResource DatoLabel}" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="4" Grid.Column="1" x:Name="TxtVictima" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="5" Text="Tipo audiencia:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="5" Grid.Column="1" x:Name="TxtTipoAudiencia" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="6" Text="Fecha audiencia:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="6" Grid.Column="1" x:Name="TxtFechaAudiencia" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="7" Text="Hora término:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="7" Grid.Column="1" x:Name="TxtHoraTermino" Style="{StaticResource DatoValor}"/>
+
+                            <TextBlock Grid.Row="8" Text="Juez:" Style="{StaticResource DatoLabel}"/>
+                            <TextBlock Grid.Row="8" Grid.Column="1" x:Name="TxtJuez" Style="{StaticResource DatoValor}"/>
+                        </Grid>
+                    </Border>
+
+                    <TextBlock Text="Información que no está en la BD"
+                               FontFamily="Segoe UI Semibold"
+                               FontSize="13.5"
+                               Foreground="{DynamicResource ReportBlueAccentBrush}"
+                               Margin="0,16,0,8"/>
+
+                    <TextBlock Text="Juzgado *"
+                               FontFamily="Segoe UI Semibold"
+                               FontSize="12.5"
+                               Margin="0,0,0,6"/>
+
+                    <TextBox x:Name="TxtJuzgadoManual"
+                             Height="36"
+                             Padding="8,0"
+                             VerticalContentAlignment="Center"
+                             Margin="0,0,0,14"/>
+
+                    <TextBlock Text="Cantidad de conjuntos a generar"
+                               FontFamily="Segoe UI Semibold"
+                               FontSize="13"
+                               Margin="0,16,0,7"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox x:Name="CmbCantidad"
+                                  Height="36"
+                                  SelectedIndex="0"
+                                  VerticalContentAlignment="Center">
+                            <ComboBoxItem Content="1"/>
+                            <ComboBoxItem Content="2"/>
+                            <ComboBoxItem Content="3"/>
+                            <ComboBoxItem Content="4"/>
+                            <ComboBoxItem Content="5"/>
+                            <ComboBoxItem Content="6"/>
+                            <ComboBoxItem Content="7"/>
+                            <ComboBoxItem Content="8"/>
+                            <ComboBoxItem Content="9"/>
+                            <ComboBoxItem Content="10"/>
+                        </ComboBox>
+
+                        <Border Grid.Column="2"
+                                Background="{DynamicResource ReportBlueSurfaceBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Padding="10,7">
+                            <TextBlock Text="ⓘ Cada conjunto genera una diapositiva con las dos etiquetas de ejecución."
+                                       TextWrapping="Wrap"
+                                       FontSize="11.5"
+                                       Foreground="{DynamicResource ReportBlueAccentBrush}"/>
+                        </Border>
+                    </Grid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Row="2"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="0,1,0,0">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0,0,14,0">
+
+                    <Button Content="Cancelar"
+                            Width="92"
+                            Height="38"
+                            Margin="0,0,10,0"
+                            Click="BtnCancelar_Click"/>
+
+                    <Button Content="Generar"
+                            Width="112"
+                            Height="38"
+                            Background="#1264D8"
+                            Foreground="White"
+                            FontFamily="Segoe UI Semibold"
+                            Click="BtnGenerar_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

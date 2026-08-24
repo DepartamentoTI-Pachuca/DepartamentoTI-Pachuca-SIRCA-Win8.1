@@ -1,0 +1,22 @@
+﻿<Page x:Class="PoderJudicial.Views.EditarRegistro"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Background="{DynamicResource BackgroundBrush}">
+
+    <!--
+        Host de "Editar Registro". El formulario en sí (controles,
+        validaciones, visibilidad por tipo de causa, videoconferencia,
+        autocompletados) vive en AudienciaFormControl — el mismo que usa
+        "Nuevo Registro" — para no duplicar lógica entre crear y editar.
+        Esta página solo aloja UNA instancia, la precarga con el registro
+        seleccionado (Audiencia o Ejecución/EXP) y actualiza en vez de
+        insertar al guardar.
+    -->
+    <Grid x:Name="PanelFormulario"/>
+
+</Page>

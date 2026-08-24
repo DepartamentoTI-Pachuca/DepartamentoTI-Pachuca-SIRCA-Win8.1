@@ -1,0 +1,19 @@
+﻿<Page x:Class="PoderJudicial.Views.RegistroCopias"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Background="{DynamicResource BackgroundBrush}">
+
+    <!--
+        Host de "Registro de Copias". El formulario en sí vive en
+        CopiasFormControl (mismo patrón que AudienciaFormControl para
+        Nuevo/Editar Registro), para que crear y editar compartan toda la
+        lógica sin duplicarla.
+    -->
+    <Grid x:Name="PanelFormulario"/>
+
+</Page>
